@@ -1,6 +1,11 @@
 // Retrieve tasks and nextId from localStorage
 let taskList = JSON.parse(localStorage.getItem('tasks'));
+if (!taskList) {
+  taskList = [];
+}
 let nextId = JSON.parse(localStorage.getItem('nextId'));
+
+console.log('Page Load Task List:', taskList);
 
 // Todo: create a function to generate a unique task id
 function generateTaskId() {
@@ -23,8 +28,26 @@ function renderTaskList() {
 
 // Todo: create a function to handle adding a new task
 function handleAddTask(event) {
-  // prevent default form submission
   event.preventDefault();
+
+  // create task object
+  let task = {
+    id: generateTaskId(),
+    name: $('#taskName').val(),
+    description: $('#taskDescription').val(),
+    dueDate: $('#taskDueDate').val(),
+    status: 'toDo',
+  };
+
+  taskList.push(task);
+
+  // save taskList to localStorage
+  localStorage.setItem('task', JSON.stringify(taskList));
+  console.log('TaskList', taskList);
+  // hide modal popup
+  $('#formModal').modal('hide');
+  //reset form
+  document.getElementById('taskForm').reset();
 }
 
 // Todo: create a function to handle deleting a task
@@ -43,7 +66,7 @@ $(document).ready(function () {
   //renderTaskList();
 
   // add event listeners
-  // $('#addTaskForm').on('submit', handleAddTask);
+  $('#addTask').on('click', handleAddTask);
   // $('#taskList').on('click', '.delete', handleDeleteTask);
 
   // make lanes droppable
@@ -52,5 +75,9 @@ $(document).ready(function () {
   // });
 
   // make due date a date picker
-  $('#dueDate').datepicker();
+  $('#taskDueDate').datepicker({
+    dateFormat: 'mm/dd/yy',
+    changeMonth: true,
+    changeYear: true,
+  });
 }); // end of document ready
