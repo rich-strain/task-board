@@ -119,9 +119,7 @@ function handleDeleteTask(event) {
   console.log('Event: ', event);
   const taskId = $(this).attr('data-task-id');
   taskList = taskList.filter((task) => task.id !== taskId);
-  // const taskId = $(this).attr('data-task-id');
-  // taskList = taskList.filter((task) => task.id !== taskId);
-  // localStorage.setItem('tasks', JSON.stringify(taskList));
+  localStorage.setItem('tasks', JSON.stringify(taskList));
   renderTaskList();
 }
 
@@ -148,7 +146,6 @@ $(document).ready(function () {
 
   // add event listeners
   $('#addTask').on('click', handleAddTask);
-  // $('#taskList').on('click', '.delete', handleDeleteTask);
 
   // make lanes droppable
   $('.lane').droppable({
