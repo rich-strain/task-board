@@ -1,4 +1,4 @@
-# Task Board Starter Code
+# Task Board
 
 ## Description
 
